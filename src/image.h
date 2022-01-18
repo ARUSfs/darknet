@@ -83,6 +83,9 @@ image make_empty_image(int w, int h, int c);
 image float_to_image_scaled(int w, int h, int c, float *data);
 image float_to_image(int w, int h, int c, float *data);
 image copy_image(image p);
+#ifdef NUMPY
+image ndarray_to_image(unsigned char* src, long* shape, long* strides);
+#endif
 void copy_image_inplace(image src, image dst);
 image load_image(char *filename, int w, int h, int c);
 image load_image_stb_resize(char *filename, int w, int h, int c);

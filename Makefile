@@ -1,12 +1,13 @@
-GPU=0
-CUDNN=0
+GPU=1
+CUDNN=1
 CUDNN_HALF=0
-OPENCV=0
+OPENCV=1
 AVX=0
 OPENMP=0
-LIBSO=0
+LIBSO=1
 ZED_CAMERA=0
 ZED_CAMERA_v2_8=0
+NUMPY=1
 
 # set GPU=1 and CUDNN=1 to speedup on GPU
 # set CUDNN_HALF=1 to further speedup 3 x times (Mixed-precision on Tensor Cores) GPU: Volta, Xavier, Turing and higher
@@ -71,6 +72,11 @@ ifeq ($(USE_CPP), 1)
 CC=g++
 else
 CC=gcc
+endif
+
+ifeq ($(NUMPY), 1)
+COMMON+= -DNUMPY -I/usr/include/python3 -I/usr/lib/python3/dist-packages/numpy/core/include/numpy
+CFLAGS+= -DNUMPY
 endif
 
 CPP=g++ -std=c++11

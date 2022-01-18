@@ -19,6 +19,7 @@ option(ENABLE_OPENCV "Enable OpenCV integration" ON)
 option(ENABLE_CUDA "Enable CUDA support" ON)
 option(ENABLE_CUDNN "Enable CUDNN" ON)
 option(ENABLE_CUDNN_HALF "Enable CUDNN Half precision" ON)
+option(ENABLE_NUMPY "Enable Numpy" ON)
 option(ENABLE_ZED_CAMERA "Enable ZED Camera support" ON)
 option(ENABLE_VCPKG_INTEGRATION "Enable VCPKG integration" ON)
 option(ENABLE_CSHARP_WRAPPER "Enable building a csharp wrapper" OFF)
@@ -26,6 +27,8 @@ option(VCPKG_BUILD_OPENCV_WITH_CUDA "Build OpenCV with CUDA extension integratio
 option(VCPKG_USE_OPENCV2 "Use legacy OpenCV 2" OFF)
 option(VCPKG_USE_OPENCV3 "Use legacy OpenCV 3" OFF)
 option(VCPKG_USE_OPENCV4 "Use OpenCV 4" ON)
+
+add_definitions(-DNUMPY)
 
 if(DEFINED ENV{VCPKG_DEFAULT_TRIPLET})
   message(STATUS "Setting default vcpkg target triplet to $ENV{VCPKG_DEFAULT_TRIPLET}")
@@ -69,6 +72,10 @@ if(ENABLE_OPENCV)
       list(APPEND VCPKG_MANIFEST_FEATURES "opencv2-base")
     endif()
   endif()
+endif()
+
+if(ENABLE_NUMPY)
+	find_package (Python3 COMPONENTS Interpreter Development NumPy)
 endif()
 
 if(NOT CMAKE_HOST_SYSTEM_PROCESSOR AND NOT WIN32)
